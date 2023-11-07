@@ -17,7 +17,7 @@ def get_read_count(header: str, format: str = 'seqREAD_xCOUNT') -> int:
         int: The read count
     '''
     delimiter = format.split('READ')[1].split('COUNT')[0]
-    read_count = header.split(delimiter)[1].split('COUNT')[1]
+    read_count = header.split(delimiter)[1].split('COUNT')[0]
     return int(read_count)
 
 
@@ -41,7 +41,7 @@ def inflate_fasta(infile: str, outfile: str, format: str = 'seqREAD_xCOUNT') -> 
         out_format = 'fastq'
     else:
         raise ValueError("Output format must be 'fasta' or 'fastq'")
-    
+
     with open(infile, 'rb') as f:
         magic_number = f.read(2)
         if magic_number == b'\x1f\x8b':
@@ -49,9 +49,11 @@ def inflate_fasta(infile: str, outfile: str, format: str = 'seqREAD_xCOUNT') -> 
         else:
             f.seek(0)
             f = open(infile, 'r')
-
         for header, sequence in SimpleFastaParser(f):
             read_count = get_read_count(header, format)
+            with open(outfile, 'a') as out:
+                for i in range(read_count):
+                    out.write(f">{header}\n{sequence}\n")
 
 
 def inflate_bam(infile: str, format: str = 'seqREAD_xCOUNT') -> None:

@@ -4,9 +4,10 @@ import os
 
 from RDPTools import RDPTools
 from collapse import collapse as collapse_reads
+from inflate import inflate_fasta, inflate_bam
 
 
-def generate_output_filename(ctx, param, value):
+def generate_collapse_filename(ctx, param, value):
     '''
     Generate the output filename for the collapse command
 
@@ -25,8 +26,29 @@ def generate_output_filename(ctx, param, value):
         # Generate the default output filename by replacing the extension
         base_name, _ = os.path.splitext(input_filename)
         return f"{base_name}.collapsed.fa"
-    return '.fasta'  # If --output and input_file are not specified, use '.fasta'
+    return 'output.collapsed.fasta'  # If --output and input_file are not specified, use '.fasta'
 
+
+def generate_inflate_filename(ctx, param, value):
+    '''
+    Generate the output filename for the inflate command
+
+    Args:
+        ctx (click.Context): Click context object
+        param (click.Parameter): Click parameter object
+        value (str): Output filename
+
+    Returns:
+        str: Output filename
+    '''
+    if value is not None:
+        return value  # If --output is specified, use the provided filename
+    if ctx.params['infile']:
+        input_filename = ctx.params['infile']
+        # Generate the default output filename by replacing the extension
+        base_name, _ = os.path.splitext(input_filename)
+        return f"{base_name}.inflated.fa"
+    return 'output.inflated.fasta'  # If --output and input_file are not specified, use '.fasta'
 
 @click.group()
 def rdp_tools():
@@ -34,7 +56,7 @@ def rdp_tools():
 
 @rdp_tools.command()
 @click.argument('infile')
-@click.option('--output', '-o', callback=generate_output_filename, help='Path to the output Fasta file')
+@click.option('--output', '-o', callback=generate_collapse_filename, help='Path to the output Fasta file')
 @click.option('--format', '-f', default=f">seqREAD_xCOUNT", help='Custom header format')
 def collapse(infile, output, format):
     click.echo(f"Input file: {infile}")
@@ -45,9 +67,11 @@ def collapse(infile, output, format):
 
 @rdp_tools.command()
 @click.argument('infile')
-@click.option('--output', '-o', callback=generate_output_filename, help='Path to the output Fasta file')
-def inflate(infile, output):
+@click.option('--output', '-o', callback=generate_inflate_filename, help='Path to the output Fasta file')
+@click.option('--format', '-f', default=f">seqREAD_xCOUNT", help='Custom header format')
+def inflate(infile, output, format):
     click.echo("Running inflate command...")
+    inflate_fasta(infile, output, format)
 
 
 @rdp_tools.command()
