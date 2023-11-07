@@ -15,6 +15,11 @@ def fill_template(template: str, read: str, count: str) -> str:
     '''
     if "READ" not in template or "COUNT" not in template:
         raise ValueError("Template must contain READ and COUNT placeholders")
+    elif template.count("READ") > 1 or template.count("COUNT") > 1:
+        raise ValueError("Template must contain only one READ and COUNT placeholder")
+    elif template.split('READ')[0].strip('>') == template.split('READ')[1].split('COUNT')[0]:
+        raise ValueError(f"Template ({template}) read and count must have unique delimiters")
+
     return template.replace("READ", read).replace("COUNT", count)
 
 
