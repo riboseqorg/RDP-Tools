@@ -1,6 +1,8 @@
 
-import gzip
 from Bio.SeqIO.FastaIO import SimpleFastaParser
+import gzip
+import pysam
+
 
 def get_read_count(header: str, format: str = 'seqREAD_xCOUNT') -> int:
     '''
@@ -59,18 +61,22 @@ def inflate_fasta(infile: str, outfile: str, format: str = 'seqREAD_xCOUNT') -> 
                         out.write(f"@{header}\n{sequence}\n+\n{'I'*len(sequence)}\n")
 
 
-def inflate_bam(infile: str, format: str = 'seqREAD_xCOUNT') -> None:
+def inflate_bam(infile: str, outfile: str, format: str = 'seqREAD_xCOUNT') -> None:
     """
     Inflate the contents of a BAM file based on the read count in the read name.
 
     Args:
         infile (str): The path to the input BAM file.
+        outfile (str): The path to the output file. 
         format (str, optional): The layout of the read headers. Defaults to 'seqREAD_xCOUNT'.
-
-    Raises:
-        ValueError: If the output format is not 'fasta' or 'fastq'.
 
     Returns:
         None
     """
-    return None
+
+    with pysam.AlignmentFile(infile, 'rb') as bam:
+        with pysam.AlignmentFile(outfile, 'wb', template=bam) as out:
+            for read in bam:
+                read_count = get_read_count(read.qname, format)
+                for i in range(read_count):
+                    out.write(read)

@@ -46,9 +46,13 @@ def generate_inflate_filename(ctx, param, value):
     if ctx.params['infile']:
         input_filename = ctx.params['infile']
         # Generate the default output filename by replacing the extension
-        base_name, _ = os.path.splitext(input_filename)
-        return f"{base_name}.inflated.fa"
+        base_name, extension = os.path.splitext(input_filename)
+        if extension == '.bam':
+            return f"{base_name}.inflated.bam"
+        else:
+            return f"{base_name}.inflated.fa"
     return 'output.inflated.fasta'  # If --output and input_file are not specified, use '.fasta'
+
 
 @click.group()
 def rdp_tools():
@@ -61,17 +65,20 @@ def rdp_tools():
 def collapse(infile, output, format):
     click.echo(f"Input file: {infile}")
     click.echo(f"Output file: {output}")
-    click.echo("Running collapse command...")
+    click.echo("Collapsing...")
     collapse_reads(infile, output, format)
 
 
 @rdp_tools.command()
 @click.argument('infile')
-@click.option('--output', '-o', callback=generate_inflate_filename, help='Path to the output Fasta file')
+@click.option('--output', '-o', callback=generate_inflate_filename, help='Path to the output file')
 @click.option('--format', '-f', default=f">seqREAD_xCOUNT", help='Custom header format')
 def inflate(infile, output, format):
-    click.echo("Running inflate command...")
-    inflate_fasta(infile, output, format)
+    click.echo("Inflating...")
+    if output.endswith('bam'):
+        inflate_bam(infile, output, format)
+    else:
+        inflate_fasta(infile, output, format)
 
 
 @rdp_tools.command()
