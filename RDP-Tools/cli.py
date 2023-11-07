@@ -73,20 +73,22 @@ def rdp_tools():
     pass
 
 @rdp_tools.command()
-@click.argument('infile', type=determine_file_mode)
+@click.argument('infile')
 @click.option('--output', '-o', callback=generate_output_filename, help='Path to the output Fasta file')
 def collapse(infile, output):
-    #print input and output
-    print(infile)
 
+    click.echo(f"Input file: {infile}")
+    click.echo(f"Output file: {output}")
     click.echo("Running collapse command...")
     rdp = RDPTools()
+
 
 @rdp_tools.command()
 @click.argument('infile', type=determine_file_mode)
 @click.option('--output', '-o', callback=generate_output_filename, help='Path to the output Fasta file')
 def inflate(infile, output):
     click.echo("Running inflate command...")
+
 
 @rdp_tools.command()
 def query():
