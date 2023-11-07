@@ -3,46 +3,7 @@ import click
 import os
 
 from RDPTools import RDPTools
-
-def is_binary(file_path):
-    '''
-    Determine if a file is binary or text.
-
-    Args:
-        file_path (str): Path to file
-
-    Returns:
-        bool: True if file is binary, False if file is text
-    '''
-    try:
-        with open(file_path, 'rb') as file:
-            while True:
-                chunk = file.read(1024)
-                if b'\x00' in chunk:
-                    return True
-                if not chunk:
-                    break
-    except Exception:
-        return False
-    return False
-
-
-def determine_file_mode(value):
-    '''
-    Determine the mode in which a file should be read in 
-
-    Args:
-        value (click.File): Click File object
-
-    Returns:
-        click.File: Click File object with correct mode
-    '''
-    if value is None:
-        return None
-    if is_binary(value):
-        return click.File('rb')
-    else:
-        return click.File('r')
+from collapse import collapse as collapse_reads
 
 
 def generate_output_filename(ctx, param, value):
@@ -60,13 +21,12 @@ def generate_output_filename(ctx, param, value):
     if value is not None:
         return value  # If --output is specified, use the provided filename
     if ctx.params['infile']:
-        input_filename = ctx.params['infile'].name
+        input_filename = ctx.params['infile']
         # Generate the default output filename by replacing the extension
         base_name, _ = os.path.splitext(input_filename)
         return f"{base_name}.collapsed.fa"
     return '.fasta'  # If --output and input_file are not specified, use '.fasta'
 
-    
 
 @click.group()
 def rdp_tools():
@@ -75,16 +35,16 @@ def rdp_tools():
 @rdp_tools.command()
 @click.argument('infile')
 @click.option('--output', '-o', callback=generate_output_filename, help='Path to the output Fasta file')
-def collapse(infile, output):
-
+@click.option('--format', '-f', default=f">seqREAD_xCOUNT", help='Custom header format')
+def collapse(infile, output, format):
     click.echo(f"Input file: {infile}")
     click.echo(f"Output file: {output}")
     click.echo("Running collapse command...")
-    rdp = RDPTools()
+    collapse_reads(infile, output, format)
 
 
 @rdp_tools.command()
-@click.argument('infile', type=determine_file_mode)
+@click.argument('infile')
 @click.option('--output', '-o', callback=generate_output_filename, help='Path to the output Fasta file')
 def inflate(infile, output):
     click.echo("Running inflate command...")
