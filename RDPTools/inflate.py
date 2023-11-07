@@ -73,7 +73,6 @@ def inflate_bam(infile: str, outfile: str, format: str = 'seqREAD_xCOUNT') -> No
     Returns:
         None
     """
-
     with pysam.AlignmentFile(infile, 'rb') as bam:
         with pysam.AlignmentFile(outfile, 'wb', template=bam) as out:
             for read in bam:
