@@ -53,7 +53,10 @@ def inflate_fasta(infile: str, outfile: str, format: str = 'seqREAD_xCOUNT') -> 
             read_count = get_read_count(header, format)
             with open(outfile, 'a') as out:
                 for i in range(read_count):
-                    out.write(f">{header}\n{sequence}\n")
+                    if out_format == 'fasta':
+                        out.write(f">{header}\n{sequence}\n")
+                    elif out_format == 'fastq':
+                        out.write(f"@{header}\n{sequence}\n+\n{'I'*len(sequence)}\n")
 
 
 def inflate_bam(infile: str, format: str = 'seqREAD_xCOUNT') -> None:
