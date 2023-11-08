@@ -23,7 +23,7 @@ def test_collapse_fq_gz():
     )
     # these files must be read differently as gzip files from python automatically
     # add the metadata (no -n flag) so MD5 hashes will not match
-    with gzip.open('tests/test_data/reads.collapsed.fq.gz', 'rb') as f:
+    with gzip.open('tests/test_data/reads.collapsed.fa.gz', 'rb') as f:
         content = f.read()
     
     md5_hash = hashlib.md5(content).hexdigest()
@@ -35,10 +35,10 @@ def test_collapse_format():
         'tests/test_data/reads.collapsed.fa',
         format='>testREAD_xCOUNT',
     )
-    with open('tests/test_data/reads.collapsed.fq', 'rb') as f:
+    with open('tests/test_data/reads.collapsed.fa', 'rb') as f:
         m = hashlib.md5()
         m.update(f.read())
-        assert m.hexdigest() == 'd05b84c78663ef7b5455561bae4de704'
+        assert m.hexdigest() == 'bb860f18c24e3a1278acd6a09f6103b8'
 
 def test_collapse_error_raised_unqi_delims():
     with pytest.raises(ValueError, match="read and count must have unique delimiters"):
@@ -47,7 +47,7 @@ def test_collapse_error_raised_unqi_delims():
             'tests/test_data/reads.collapsed.fa',
             format='>testREADtestCOUNT',
         )
-        with open('tests/test_data/reads.collapsed.fq', 'rb') as f:
+        with open('tests/test_data/reads.collapsed.fa', 'rb') as f:
             m = hashlib.md5()
             m.update(f.read())
 
@@ -58,7 +58,7 @@ def test_collapse_error_raised_missing_delim():
             'tests/test_data/reads.collapsed.fa',
             format='>testtestCOUNT',
         )
-        with open('tests/test_data/reads.collapsed.fq', 'rb') as f:
+        with open('tests/test_data/reads.collapsed.fa', 'rb') as f:
             m = hashlib.md5()
             m.update(f.read())
 
@@ -69,6 +69,6 @@ def test_collapse_error_raised_double_read():
             'tests/test_data/reads.collapsed.fa',
             format='>testREADtestCOUNT_READ',
         )
-        with open('tests/test_data/reads.collapsed.fq', 'rb') as f:
+        with open('tests/test_data/reads.collapsed.fa', 'rb') as f:
             m = hashlib.md5()
             m.update(f.read())
