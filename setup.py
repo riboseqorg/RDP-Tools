@@ -36,7 +36,7 @@ setup(
     description="A python command-line utility for working with RiboSeq.Orgs Data Portal",
     entry_points={
         "console_scripts": [
-            "RDP-Tools=RDP-Tools.cli:main",
+            "RDP-Tools=RDPTools.RDPTools:main",
         ],
     },
     install_requires=requirements,
@@ -45,7 +45,7 @@ setup(
     keywords="RDP-Tools",
     name="RDP-Tools",
     packages=find_packages(
-        include=["RDP-Tools", "RDP-Tools.*"],
+        include=["RDPTools", "RDPTools.*"],
         exclude=[
             "sample_data/*",
         ],
