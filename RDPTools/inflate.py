@@ -37,9 +37,9 @@ def inflate_fasta(infile: str, outfile: str, format: str = 'seqREAD_xCOUNT') -> 
     Returns:
         None
     """
-    if any(outfile.endswith(ext) for ext in ['fa', 'fasta', 'fna']):
+    if any(outfile.strip('.gz').endswith(ext) for ext in ['fa', 'fasta', 'fna']):
         out_format = 'fasta'
-    elif any(outfile.endswith(ext) for ext in ['fq', 'fastq']):
+    elif any(outfile.strip('.gz').endswith(ext) for ext in ['fq', 'fastq']):
         out_format = 'fastq'
     else:
         raise ValueError("Output format must be 'fasta' or 'fastq'")
@@ -51,14 +51,21 @@ def inflate_fasta(infile: str, outfile: str, format: str = 'seqREAD_xCOUNT') -> 
         else:
             f.seek(0)
             f = open(infile, 'r')
+        
+        # write over existing file
+        open(outfile, 'w').close()
+
+        inflated_count = 1
         for header, sequence in SimpleFastaParser(f):
             read_count = get_read_count(header, format)
             with open(outfile, 'a') as out:
                 for i in range(read_count):
                     if out_format == 'fasta':
-                        out.write(f">{header}\n{sequence}\n")
+                        out.write(f">read{inflated_count}\n{sequence}\n")
                     elif out_format == 'fastq':
-                        out.write(f"@{header}\n{sequence}\n+\n{'I'*len(sequence)}\n")
+                        out.write(f"@read{inflated_count}\n{sequence}\n+\n{'I'*len(sequence)}\n")
+                    
+                    inflated_count += 1
 
 
 def inflate_bam(infile: str, outfile: str, format: str = 'seqREAD_xCOUNT') -> None:
