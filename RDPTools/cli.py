@@ -62,23 +62,27 @@ def rdp_tools():
 @click.argument('infile')
 @click.option('--output', '-o', callback=generate_collapse_filename, help='Path to the output Fasta file')
 @click.option('--format', '-f', default=f">seqREAD_xCOUNT", help='Custom header format')
-def collapse(infile, output, format):
+@click.option('--compress', '-c', is_flag=True, help='Compress the output file')
+def collapse(infile, output, format, compress):
     click.echo(f"Input file: {infile}")
     click.echo(f"Output file: {output}")
     click.echo("Collapsing...")
-    collapse_reads(infile, output, format)
+    collapse_reads(infile, output, format, compress)
 
 
 @rdp_tools.command()
 @click.argument('infile')
 @click.option('--output', '-o', callback=generate_inflate_filename, help='Path to the output file')
 @click.option('--format', '-f', default=f">seqREAD_xCOUNT", help='Custom header format')
-def inflate(infile, output, format):
+@click.option('--compress', '-c', is_flag=True, help='Compress the output file')
+def inflate(infile, output, format, compress):
     click.echo("Inflating...")
     if output.endswith('bam'):
+        if compress:
+            click.echo("BAM files are already compressed. Ignoring --compress flag.")
         inflate_bam(infile, output, format)
     else:
-        inflate_fasta(infile, output, format)
+        inflate_fasta(infile, output, format, compress)
 
 
 @rdp_tools.command()

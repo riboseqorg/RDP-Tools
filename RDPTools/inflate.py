@@ -23,7 +23,28 @@ def get_read_count(header: str, format: str = 'seqREAD_xCOUNT') -> int:
     return int(read_count)
 
 
-def inflate_fasta(infile: str, outfile: str, format: str = 'seqREAD_xCOUNT') -> None:
+def write_read(header: str, count: int, sequence: str, out: str, out_format: str) -> None:
+    """
+    Write a read to the output file.
+
+    Args:
+        header (str): The read header.
+        count (int): The read count.
+        sequence (str): The read sequence.
+        out (str): The path to the output file.
+        out_format (str): The output format.
+
+    Returns:
+        None
+    """
+    for i in range(count):
+        if out_format == 'fasta':
+            out.write(f'>{header}\n{sequence}\n')
+        elif out_format == 'fastq':
+            out.write(f'@{header}\n{sequence}\n+\n{"I" * len(sequence)}\n')
+
+
+def inflate_fasta(infile: str, outfile: str, format: str = 'seqREAD_xCOUNT', compress: bool = False) -> None:
     """
     Inflate the contents of a FASTA file based on the read count in the read name.
 
@@ -31,6 +52,7 @@ def inflate_fasta(infile: str, outfile: str, format: str = 'seqREAD_xCOUNT') -> 
         infile (str): The path to the input FASTA file.
         outfile (str): The path to the output file. Extension determines the output format. 
         format (str, optional): The layout of the read file headers. Defaults to 'seqREAD_xCOUNT'.
+        compress (bool, optional): Compress the output file. Defaults to False.
     Raises:
         ValueError: If the output format is not 'fasta' or 'fastq'.
 
@@ -42,30 +64,27 @@ def inflate_fasta(infile: str, outfile: str, format: str = 'seqREAD_xCOUNT') -> 
     elif any(outfile.strip('.gz').endswith(ext) for ext in ['fq', 'fastq']):
         out_format = 'fastq'
     else:
-        raise ValueError("Output format must be 'fasta' or 'fastq'")
-
-    with open(infile, 'rb') as f:
-        magic_number = f.read(2)
-        if magic_number == b'\x1f\x8b':
-            f = gzip.open(infile, 'rt')
-        else:
-            f.seek(0)
-            f = open(infile, 'r')
+        raise ValueError("Output format must be 'fasta' ['fa', 'fasta', 'fna'] or 'fastq' ['fq', 'fastq']")
+    
+    try:
+        f = gzip.open(infile, 'rt')
+    except OSError:
+        f = open(infile, 'r')
         
-        # write over existing file
-        open(outfile, 'w').close()
+    # write over existing file
+    open(outfile, 'w').close()
 
-        inflated_count = 1
-        for header, sequence in SimpleFastaParser(f):
-            read_count = get_read_count(header, format)
+    inflated_count = 1
+    for header, sequence in SimpleFastaParser(f):
+        read_count = get_read_count(header, format)
+
+        if compress:
+            with gzip.open(outfile, 'at') as out:
+                write_read(header, read_count, sequence, out, out_format)
+        else:
             with open(outfile, 'a') as out:
-                for i in range(read_count):
-                    if out_format == 'fasta':
-                        out.write(f">read{inflated_count}\n{sequence}\n")
-                    elif out_format == 'fastq':
-                        out.write(f"@read{inflated_count}\n{sequence}\n+\n{'I'*len(sequence)}\n")
-                    
-                    inflated_count += 1
+                write_read(header, read_count, sequence, out, out_format)
+                inflated_count += 1
 
 
 def inflate_bam(infile: str, outfile: str, format: str = 'seqREAD_xCOUNT') -> None:

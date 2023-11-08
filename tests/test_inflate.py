@@ -21,19 +21,20 @@ def test_inflate_fasta():
     with open('tests/test_data/test.inflated.fa', 'rb') as f:
         m = hashlib.md5()
         m.update(f.read())
-        assert m.hexdigest() == 'd31d473d32055bce9d93ca624355a5ce'
+        assert m.hexdigest() == 'b36b91d8eb1b407324ffa0c6fa50f8e6'
 
 def test_inflate_fasta_gz():
     inflate_fasta(
         'tests/test_data/reads.collapsed.fa.gz',
-        'tests/test_data/test.inflated.fa.gz')
+        'tests/test_data/test.inflated.fa.gz',
+        compress=True)
     # these files must be read differently as gzip files from python automatically
     # add the metadata (no -n flag) so MD5 hashes will not match
     with gzip.open('tests/test_data/test.inflated.fa.gz', 'rb') as f:
         content = f.read()
     
     md5_hash = hashlib.md5(content).hexdigest()
-    assert md5_hash == '1d2cc643a8ca7642e68964fae580b56b'
+    assert md5_hash == 'b36b91d8eb1b407324ffa0c6fa50f8e6'
 
 def test_inflate_fasta_to_fastq():
     infile = 'tests/test_data/reads.collapsed.fa'
@@ -47,10 +48,11 @@ def test_inflate_fasta_to_fastq():
 def test_inflate_fasta_to_fastq_gz():
     inflate_fasta(
         'tests/test_data/reads.collapsed.fa.gz',
-        'tests/test_data/test.inflated.fq.gz')
+        'tests/test_data/test.inflated.fq.gz',
+        compress=True)
 
     with gzip.open('tests/test_data/test.inflated.fq.gz', 'rb') as f:
         content = f.read()
     
     md5_hash = hashlib.md5(content).hexdigest()
-    assert md5_hash == '1d2cc643a8ca7642e68964fae580b56b'
+    assert md5_hash == 'ed038e7ec59fa7b5504832c0b505d071'
