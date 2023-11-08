@@ -2,7 +2,6 @@
 import click
 import os
 
-from RDPTools import RDPTools
 from collapse import collapse as collapse_reads
 from inflate import inflate_fasta, inflate_bam
 
@@ -76,12 +75,13 @@ def collapse(infile, output, format, compress):
 @click.option('--format', '-f', default=f">seqREAD_xCOUNT", help='Custom header format')
 @click.option('--compress', '-c', is_flag=True, help='Compress the output file')
 def inflate(infile, output, format, compress):
-    click.echo("Inflating...")
     if output.endswith('bam'):
         if compress:
             click.echo("BAM files are already compressed. Ignoring --compress flag.")
+        click.echo("Inflating...")
         inflate_bam(infile, output, format)
     else:
+        click.echo("Inflating...")
         inflate_fasta(infile, output, format, compress)
 
 
