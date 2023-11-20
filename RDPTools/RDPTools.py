@@ -2,8 +2,8 @@
 import click
 import os
 
-from collapse import collapse as collapse_reads
-from inflate import inflate_fasta, inflate_bam
+from .collapse import collapse as collapse_reads
+from .inflate import inflate_fasta, inflate_bam
 
 
 def generate_collapse_filename(ctx, param, value):

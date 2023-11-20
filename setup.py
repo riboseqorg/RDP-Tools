@@ -36,14 +36,14 @@ setup(
     description="A python command-line utility for working with RiboSeq.Orgs Data Portal",
     entry_points={
         "console_scripts": [
-            "RDP-Tools=RDPTools.RDPTools:main",
+            "RDP-Tools=RDPTools.RDPTools:rdp_tools",
         ],
     },
     install_requires=requirements,
     license="MIT license",
     include_package_data=True,
     keywords="RDP-Tools",
-    name="RDP-Tools",
+    name="RiboSeq-DP-Tools",
     packages=find_packages(
         include=["RDPTools", "RDPTools.*"],
         exclude=[
@@ -53,6 +53,6 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/riboseqorg/RDP-Tools",
-    version="0.1.0",
+    version="0.1.3",
     zip_safe=False,
 )
