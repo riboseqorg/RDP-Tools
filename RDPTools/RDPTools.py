@@ -84,10 +84,5 @@ def inflate(infile, output, format, compress):
         click.echo("Inflating...")
         inflate_fasta(infile, output, format, compress)
 
-
-@rdp_tools.command()
-def query():
-    click.echo("Running query command...")
-
 if __name__ == '__main__':
     rdp_tools()
