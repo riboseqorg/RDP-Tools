@@ -50,6 +50,29 @@ or:
 
    docker pull quay.io/jackcurragh/rdp-tools
 
+
+Usage
+-----
+
+RDP-Tools is intended to be used as a command line tool.
+
+To collapse a FASTQ file, run:
+
+   RDP-Tools collapse <input_FASTQ>
+
+To inflate a FASTA file, run:
+   
+   RDP-Tools inflate <input_FASTA>
+
+To inflate a FASTA to a FASTQ file, run:
+   
+   RDP-Tools inflate <input_FASTA> -o <output_file>.fastq/fq
+
+To inflate a BAM file, run:
+      
+   RDP-Tools inflate <input_BAM>
+
+
 Contribute
 ----------
 
