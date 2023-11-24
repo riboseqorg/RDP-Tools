@@ -49,20 +49,28 @@ Usage
 RDP-Tools is intended to be used as a command line tool.
 
 To collapse a FASTQ file, run:
+
 .. code-block:: bash
-RDP-Tools collapse input.fastq
+
+   RDP-Tools collapse input.fastq
 
 To inflate a FASTA file, run:
+
 .. code-block:: bash
-RDP-Tools inflate input.fasta
+
+   RDP-Tools inflate input.fasta
 
 To inflate a FASTA to a FASTQ file, run:
+
 .. code-block:: bash
-RDP-Tools inflate input.fasta -o output.fastq/fq
+
+   RDP-Tools inflate input.fasta -o output.fastq/fq
 
 To inflate a BAM file, run:
+
 .. code-block:: bash
-RDP-Tools inflate input.bam
+
+   RDP-Tools inflate input.bam
 
 
 Contribute
