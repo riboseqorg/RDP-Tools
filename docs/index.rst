@@ -75,8 +75,8 @@ To inflate a BAM file, run:
 Contribute
 ----------
 
-- Issue Tracker: (github.com/riboseqorg/RDP-Tools/issues)
-- Source Code: (github.com/riboseqorg/RDP-Tools)
+- Issue Tracker: (https://github.com/riboseqorg/RDP-Tools/issues)
+- Source Code: (https://github.com/riboseqorg/RDP-Tools)
 
 Support
 -------
