@@ -21,31 +21,44 @@ A python command-line utility for programmatically interacting with RiboSeq.Orgs
 * Free software: MIT license
 * Documentation: https://RDP-Tools.readthedocs.io.
 
+
 Installation
 ------------
 
-To install RDP-Tools:
-
+Install RDP-Tools by running:
 .. code-block:: console
+   pip install RiboSeq-DP-Tools
 
-    $ pip install RDP-Tools
+or:
+.. code-block:: console
+   docker pull quay.io/jackcurragh/rdp-tools
+
 
 Usage
-------------
+-----
 
-Collapse a a FASTQ file to a FASTA file:
+RDP-Tools is intended to be used as a command line tool.
 
+To collapse a FASTQ file, run:
 .. code-block:: console
+   RDP-Tools collapse <input_FASTQ>
 
-    $ RDP-Tools collapse 
+To inflate a FASTA file, run:
+.. code-block:: console
     
-Re-inflate a collapsed file (FASTA/BAM)
+    RDP-Tools inflate <input_FASTA>
 
+To inflate a FASTA to a FASTQ file, run:
+.. code-block:: console
+   RDP-Tools inflate <input_FASTA> -o <output_file>.fastq/fq
+
+To inflate a BAM file, run:
 .. code-block:: console
 
-    $ RDP-Tools inflate 
+    RDP-Tools inflate <input_BAM>
+    
 
-For more information on how to use RiboMetric, see the documentation_ or use :code:`--help`
+For more information on how to use RDP-Tools, see the documentation_ or use :code:`--help`
 
 .. _documentation: https://rdp-tools.readthedocs.io/en/latest/?version=latest
 
