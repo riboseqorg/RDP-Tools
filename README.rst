@@ -47,6 +47,6 @@ Re-inflate a collapsed file (FASTA/BAM)
 
 For more information on how to use RiboMetric, see the documentation_ or use :code:`--help`
 
-.. _documentation: https://ribometric.readthedocs.io/en/latest/?version=latest
+.. _documentation: https://rdp-tools.readthedocs.io/en/latest/?version=latest
 
 
