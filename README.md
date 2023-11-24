@@ -51,6 +51,6 @@ RDP-Tools inflate <input_BAM>
 
 For more information on how to use RDP-Tools, see the documentation_ or use :code:`--help`
 
-.. _documentation: https://rdp-tools.readthedocs.io/en/latest/?version=latest
+documentation: https://rdp-tools.readthedocs.io/en/latest/?version=latest
 
 

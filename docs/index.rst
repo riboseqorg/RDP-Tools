@@ -11,14 +11,6 @@ Welcome to RDP-Tools's documentation!
    :caption: Contents:
 
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
 RDP-Tools
 =========
 
@@ -30,11 +22,9 @@ Features
 --------
 
   - File Collapsing:
-
    - FASTQ to Collapsed FASTA
 
   - File Inflating:
-
    - FASTA to Inflated FASTA 
    - FASTA to Inflated FASTQ
    - BAM to Inflated BAM 
@@ -43,12 +33,12 @@ Installation
 ------------
 
 Install RDP-Tools by running:
-
-   ``pip install RiboSeq-DP-Tools``
+.. code-block:: bash
+   pip install RiboSeq-DP-Tools
 
 or:
-
-   ``docker pull quay.io/jackcurragh/rdp-tools``
+.. code-block:: bash
+   docker pull quay.io/jackcurragh/rdp-tools
 
 
 Usage
@@ -57,19 +47,20 @@ Usage
 RDP-Tools is intended to be used as a command line tool.
 
 To collapse a FASTQ file, run:
-
-   ``RDP-Tools collapse <input_FASTQ>``
+.. code-block:: bash
+   RDP-Tools collapse input.fastq
 
 To inflate a FASTA file, run:
-   ``RDP-Tools inflate <input_FASTA>``
+.. code-block:: bash
+   RDP-Tools inflate input.fasta
 
 To inflate a FASTA to a FASTQ file, run:
-   
-   ``RDP-Tools inflate <input_FASTA> -o <output_file>.fastq/fq``
+.. code-block:: bash
+   RDP-Tools inflate input.fasta -o output.fastq/fq
 
 To inflate a BAM file, run:
-      
-   ``RDP-Tools inflate <input_BAM>``
+.. code-block:: bash
+   RDP-Tools inflate input.bam
 
 
 Contribute
