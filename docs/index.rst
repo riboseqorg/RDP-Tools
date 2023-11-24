@@ -58,26 +58,25 @@ RDP-Tools is intended to be used as a command line tool.
 
 To collapse a FASTQ file, run:
 
-   RDP-Tools collapse <input_FASTQ>
+   ``RDP-Tools collapse <input_FASTQ>``
 
 To inflate a FASTA file, run:
-   
-   RDP-Tools inflate <input_FASTA>
+   ``RDP-Tools inflate <input_FASTA>``
 
 To inflate a FASTA to a FASTQ file, run:
    
-   RDP-Tools inflate <input_FASTA> -o <output_file>.fastq/fq
+   ``RDP-Tools inflate <input_FASTA> -o <output_file>.fastq/fq``
 
 To inflate a BAM file, run:
       
-   RDP-Tools inflate <input_BAM>
+   ``RDP-Tools inflate <input_BAM>``
 
 
 Contribute
 ----------
 
-- Issue Tracker: github.com/riboseqorg/RDP-Tools/issues
-- Source Code: github.com/riboseqorg/RDP-Tools
+- Issue Tracker: (github.com/riboseqorg/RDP-Tools/issues)
+- Source Code: (github.com/riboseqorg/RDP-Tools)
 
 Support
 -------
