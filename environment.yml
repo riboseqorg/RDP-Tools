@@ -1,6 +1,8 @@
 name: RDP-Tools
 channels:
+- conda-forge
 - pkgs/main
 dependencies:
+- biopython
 - python=3.10
 
