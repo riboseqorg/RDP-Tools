@@ -1,8 +1,9 @@
 name: RDP-Tools
 channels:
-- conda-forge
-- pkgs/main
+  - conda-forge
+  - bioconda
+  - pkgs/main
 dependencies:
-- biopython
-- python=3.10
-
+  - python
+  - pip:
+    - RiboSeq-DP-Tools
