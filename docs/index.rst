@@ -21,11 +21,10 @@ It is also home to any future tools developed for interacting with RiboSeq.Org's
 Features
 --------
 
-  - File Collapsing:
+File Collapsing:
    - FASTQ to Collapsed FASTA
 
-
-  - File Inflating:
+File Inflating:
    - FASTA to Inflated FASTA 
    - FASTA to Inflated FASTQ
    - BAM to Inflated BAM 
