@@ -31,7 +31,7 @@ File Inflating:
    
   
 Installation
-------------
+============
 
 Install RDP-Tools by running:
 
@@ -47,7 +47,7 @@ or:
 
 
 Usage
------
+=====
 
 RDP-Tools is intended to be used as a command line tool.
 
@@ -77,18 +77,18 @@ To inflate a BAM file, run:
 
 
 Contribute
-----------
+==========
 
 - Issue Tracker: (https://github.com/riboseqorg/RDP-Tools/issues)
 - Source Code: (https://github.com/riboseqorg/RDP-Tools)
 
 Support
--------
+=======
 
 If you are having issues, please let us know.
 Our email is riboseqXYZ@gmail.com (remove the XYZ).
 
 License
--------
+=======
 
 The project is licensed under the MIT license.
