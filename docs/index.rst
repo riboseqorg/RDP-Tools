@@ -44,11 +44,11 @@ Installation
 
 Install RDP-Tools by running:
 
-   pip install RiboSeq-DP-Tools
+   ``pip install RiboSeq-DP-Tools``
 
 or:
 
-   docker pull quay.io/jackcurragh/rdp-tools
+   ``docker pull quay.io/jackcurragh/rdp-tools``
 
 
 Usage
