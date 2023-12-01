@@ -93,11 +93,14 @@ def database():
     pass
 
 @database.command()
-def sample_fields():
-    # Call the method to list sample fields
+@click.option('--pretty', is_flag=True, help='Pretty print the results')
+def sample_fields(pretty):
     client = RDPClient()
     result = client.list_sample_fields()
-    pprint(result, expand_all=True)
+    if pretty:
+        pprint(result, expand_all=True)
+    else:
+        click.echo(result)
 
 
 
@@ -105,11 +108,14 @@ def sample_fields():
 @click.option('--query', help='Specify the query parameters, e.g. "TISSUE=Lung"')
 @click.option('--fields', help='List of DB fields to return, e.g. "TISSUE,CELL_LINE"')
 @click.option('--limit', default=100, help='Limit the number of results')
-def samples(query, fields, limit):
-    # Call the method to query samples
+@click.option('--pretty', is_flag=True, help='Pretty print the results')
+def samples(query, fields, limit, pretty):
     client = RDPClient()
     result = client.query_samples(query, fields, limit)
-    pprint(result, expand_all=True)
+    if pretty:
+        pprint(result, expand_all=True)
+    else:
+        click.echo(result)
 
 
 if __name__ == '__main__':
