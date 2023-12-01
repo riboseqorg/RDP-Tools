@@ -1,9 +1,13 @@
-"""Console script for RiboMetric."""
+"""Console script for RDP-Tools."""
 import click
 import os
 
 from .collapse import collapse as collapse_reads
 from .inflate import inflate_fasta, inflate_bam
+from .client import RDPClient
+from rich.pretty import pprint
+
+
 
 
 def generate_collapse_filename(ctx, param, value):
@@ -83,6 +87,30 @@ def inflate(infile, output, format, compress):
     else:
         click.echo("Inflating...")
         inflate_fasta(infile, output, format, compress)
+
+@rdp_tools.group()
+def database():
+    pass
+
+@database.command()
+def sample_fields():
+    # Call the method to list sample fields
+    client = RDPClient()
+    result = client.list_sample_fields()
+    pprint(result, expand_all=True)
+
+
+
+@database.command()
+@click.option('--query', help='Specify the query parameters, e.g. "TISSUE=Lung"')
+@click.option('--fields', help='List of DB fields to return, e.g. "TISSUE,CELL_LINE"')
+@click.option('--limit', default=100, help='Limit the number of results')
+def samples(query, fields, limit):
+    # Call the method to query samples
+    client = RDPClient()
+    result = client.query_samples(query, fields, limit)
+    pprint(result, expand_all=True)
+
 
 if __name__ == '__main__':
     rdp_tools()
