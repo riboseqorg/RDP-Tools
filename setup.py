@@ -5,7 +5,7 @@
 from setuptools import setup, find_packages
 from pathlib import Path
 
-with open("README.rst") as readme_file:
+with open("README.md") as readme_file:
     readme = readme_file.read()
 
 # Get the path to the requirements.txt file
@@ -53,6 +53,6 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/riboseqorg/RDP-Tools",
-    version="0.1.3",
+    version="0.1.4",
     zip_safe=False,
 )
