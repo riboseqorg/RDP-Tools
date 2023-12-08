@@ -108,7 +108,7 @@ def sample_fields(pretty):
 @click.option('--query', help='Specify the query parameters, e.g. "TISSUE=Lung"')
 @click.option('--fields', help='List of DB fields to return, e.g. "TISSUE,CELL_LINE"')
 @click.option('--limit', default=100, help='Limit the number of results')
-@click.option('--pretty', is_flag=True, help='Pretty print the results')
+@click.option('--pretty', is_flag=False, help='Pretty print the results')
 def samples(query, fields, limit, pretty):
     client = RDPClient()
     result = client.query_samples(query, fields, limit)
