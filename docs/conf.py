@@ -7,9 +7,9 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'RDP-Tools'
-copyright = '2023, Jack Tierney'
-author = 'Jack Tierney'
-release = '0.1.3'
+copyright = '2023, RiboSeqOrg'
+author = 'Jack Tierney -RiboSeqOrg'
+release = '0.1.4'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -26,3 +26,15 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 html_theme = "sphinx_rtd_theme"
 html_static_path = ['_static']
+
+import sys, os
+
+sys.path.append(os.path.abspath('sphinxext'))
+
+extensions = ['myst_parser']
+
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.txt': 'restructuredtext',
+    '.md': 'markdown',
+}
